@@ -8,6 +8,8 @@ import marcozagaria.Classi.Product;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Application {
 
@@ -38,6 +40,14 @@ public class Application {
         orderList.add(new Order(3, "in cosegna", LocalDate.of(2024, 9, 25), LocalDate.of(2024, 9, 2), List.of(products.get(8), products.get(9)), utente3));
         orderList.add(new Order(2, "consegnato", LocalDate.of(2024, 9, 17), LocalDate.of(2024, 9, 25), List.of(products.get(3), products.get(7)), utente4));
 
+
+        System.out.println("---------------------esercizio 1----------------------------");
+        Map<Customer, List<Order>> ordiniCliente = orderList.stream()
+                .collect(Collectors.groupingBy(Order::getCustomer));
+        ordiniCliente.forEach(((customer, orders) -> {
+            System.out.println("ciao " + customer.getName());
+            orders.forEach(order -> System.out.println("il tuo ordine id " + order.getId() + " stato di consegna: " + order.getStatus()));
+        }));
 
     }
 }
