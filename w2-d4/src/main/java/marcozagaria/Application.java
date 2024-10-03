@@ -38,16 +38,29 @@ public class Application {
         orderList.add(new Order(1, "spedito", LocalDate.of(2024, 9, 29), LocalDate.of(2024, 10, 4), List.of(products.get(0), products.get(9)), utente1));
         orderList.add(new Order(2, "consegnato", LocalDate.of(2024, 9, 15), LocalDate.of(2024, 9, 23), List.of(products.get(2), products.get(5)), utente2));
         orderList.add(new Order(3, "in cosegna", LocalDate.of(2024, 9, 25), LocalDate.of(2024, 9, 2), List.of(products.get(8), products.get(9)), utente3));
-        orderList.add(new Order(2, "consegnato", LocalDate.of(2024, 9, 17), LocalDate.of(2024, 9, 25), List.of(products.get(3), products.get(7)), utente4));
+        orderList.add(new Order(4, "consegnato", LocalDate.of(2024, 9, 17), LocalDate.of(2024, 9, 25), List.of(products.get(3), products.get(7)), utente4));
 
 
         System.out.println("---------------------esercizio 1----------------------------");
         Map<Customer, List<Order>> ordiniCliente = orderList.stream()
                 .collect(Collectors.groupingBy(Order::getCustomer));
+
         ordiniCliente.forEach(((customer, orders) -> {
             System.out.println("ciao " + customer.getName());
             orders.forEach(order -> System.out.println("il tuo ordine id " + order.getId() + " stato di consegna: " + order.getStatus()));
         }));
+
+
+        System.out.println("---------------------esercizio 2----------------------------");
+
+        Map<Customer, Double> importoCliente = orderList.stream()
+                .collect(Collectors.groupingBy(Order::getCustomer, Collectors.summingDouble(order -> order.getProducts().stream()
+                        .mapToDouble(Product::getPrice).sum())));
+
+        importoCliente.forEach((customer, total) -> {
+            System.out.println("ciao " + customer.getName() + " hai speso: " + total + "€");
+
+        });
 
     }
 }
