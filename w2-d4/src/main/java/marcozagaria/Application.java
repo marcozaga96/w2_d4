@@ -64,9 +64,18 @@ public class Application {
 
         System.out.println("---------------------esercizio 3----------------------------");
 
-        List<Product> prodottiCostosi = products.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed())
+        List<Product> prodottiCostosi = products.stream()
+                .sorted(Comparator.comparingDouble(Product::getPrice).reversed())
                 .limit(5).toList();
 
-        prodottiCostosi.forEach(product -> System.out.println(product.getPrice()));
+        prodottiCostosi.forEach(product -> System.out.println("i progotti più costosi sono: " + product.getName() + " nella categoria " + product.getCategory() + " al prezzo di " + product.getPrice()));
+
+        System.out.println("---------------------esercizio 4----------------------------");
+
+        double mediaOrdini = orderList.stream()
+                .collect(Collectors.averagingDouble(order -> order.getProducts()
+                        .stream().mapToDouble(Product::getPrice).sum()));
+
+        System.out.println("gli utenti in media hanno speso: " + mediaOrdini);
     }
 }
