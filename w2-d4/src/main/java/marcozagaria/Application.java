@@ -77,5 +77,13 @@ public class Application {
                         .stream().mapToDouble(Product::getPrice).sum()));
 
         System.out.println("gli utenti in media hanno speso: " + mediaOrdini);
+
+        System.out.println("---------------------esercizio 5----------------------------");
+
+        Map<String, Double> costoPerCategoria = products.stream()
+                .collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice)));
+
+        costoPerCategoria.forEach((category, sum) ->
+                System.out.println("la categoria " + category + " ha dei prodotti per un costo totale di " + sum + "€"));
     }
 }
