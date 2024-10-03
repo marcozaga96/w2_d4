@@ -7,6 +7,7 @@ import marcozagaria.Classi.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,8 +60,13 @@ public class Application {
 
         importoCliente.forEach((customer, total) -> {
             System.out.println("ciao " + customer.getName() + " hai speso: " + total + "€");
-
         });
 
+        System.out.println("---------------------esercizio 3----------------------------");
+
+        List<Product> prodottiCostosi = products.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed())
+                .limit(5).toList();
+
+        prodottiCostosi.forEach(product -> System.out.println(product.getPrice()));
     }
 }
